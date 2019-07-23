@@ -1,8 +1,23 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-/* Create */
-/* Read */
+/**
+ * @typedef {Object} Snippet
+ * @property {sring} id
+ * @property {string} author
+ * @property {string} code
+ * @property {sring} id
+ * @property {string} author
+ * @property {string} comments
+ * @property {number} favorites
+ */
+
+/** Read
+ *Select a number from db.
+ *can accept optional query object to filter results
+ * @param {Object} [query]
+ * @returns {Promise<[Object]>}
+ */
 
 exports.select = async (query = {}) => {
   try {
