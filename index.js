@@ -8,13 +8,14 @@ async function testModels() {
   //   console.log(snippets);
 
   try {
-    await Snippet.insert({
-      author: 'Ayana',
+    const newSnip = await Snippet.insert({
+      author: 'Chris',
       code: 'code, code, code',
       title: 'Ayana is the best',
       description: 'Ayana got is ssss',
       language: 'javacript',
     });
+    console.log(newSnip);
   } catch (err) {
     console.log(err);
   }

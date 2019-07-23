@@ -41,8 +41,11 @@ exports.select = async (query = {}) => {
 
 exports.insert = async ({ author, code, title, description, language }) => {
   try {
+    if (!author || !code || !title || !description || !language)
+      throw Error('Missing property');
     const dbpath = path.join(__dirname, '..', 'db', 'snippets.json');
     const snippets = JSON.parse(await fs.readFile(dbpath));
+
     // read snippets.json
     // grab data
     // parse datat
@@ -57,7 +60,8 @@ exports.insert = async ({ author, code, title, description, language }) => {
       comments: [],
       favorites: 0,
     });
-    return fs.writeFile(dbpath, JSON.stringify(snippets));
+    await fs.writeFile(dbpath, JSON.stringify(snippets));
+    return snippets[snippets.length[-1]];
   } catch (err) {
     console.log(err, 'ERROR from snippets');
     throw err;
