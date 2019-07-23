@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for snipps app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayanahawk/snippets_backed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayanahawk/snippets_backed/issues"
+  },
+  "homepage": "https://github.com/ayanahawk/snippets_backed#readme",
+  "dependencies": {
+    "shortid": "^2.2.14"
+  }
+}
