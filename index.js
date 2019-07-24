@@ -9,7 +9,7 @@ async function testModels() {
 
   try {
     const newSnip = await Snippet.insert({
-      author: 'Chris',
+      author: 'Chrigjkgs',
       code: 'code, code, code',
       title: 'Ayana is the best',
       description: 'Ayana got is ssss',
@@ -21,4 +21,20 @@ async function testModels() {
   }
 }
 
+async function testSnippetsSelect() {
+  const snippets = await Snippet.select();
+  console.log(snippets);
+}
+
+async function testSnippetsInsert() {
+  const snippets = await Snippet.insert();
+  console.log(snippets);
+}
+
+async function testDelete(id) {
+  const snippets = await Snippet.delete(id);
+  console.log(snippets);
+}
+
 testModels();
+// testSnippetsInsert();
