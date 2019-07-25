@@ -1,5 +1,3 @@
-const fs = require('fs').promises;
-const path = require('path');
 const shortid = require('shortid');
 const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
 
@@ -25,7 +23,7 @@ const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
 
 exports.select = async (query = {}) => {
   try {
-    const snippets = await readJsonFromFile('snippets');
+    const snippets = await readJsonFromDb('snippets');
     const filtered = snippets.filter(snippet =>
       Object.keys(query).every(key => query[key] === snippet[key])
     );
@@ -43,7 +41,7 @@ exports.insert = async ({ author, code, title, description, language }) => {
   try {
     if (!author || !code || !title || !description || !language)
       throw Error('Missing property');
-    const snippets = await readJsonFromFile('snippets');
+    const snippets = await readJsonFromDb('snippets');
 
     // read snippets.json
     // grab data
@@ -76,15 +74,21 @@ exports.delete = async id => {
   const filteredSnips = await snippets.filter(snippet => snippet.id !== id);
   console.log(filteredSnips);
   // write the file
+  // comapring the filtered snippet id not tth
   if (filteredSnips.length === snippets.length) return;
   return writeJsonToDb('snippets', filteredSnips);
 };
 
+/**
+ * @param {string} if-id of the snippet to update
+ * @param {Snippet} newData-subset of value
+ */
 exports.update = async (id, newData) => {
   // read in file
   const snippets = await readJsonFromDb('snippets');
-  // why am i using a map
+  // map holds key values
   const updateSnips = snippets.map(snippet => {
+    // if it is not the id I want, just return it.
     if (snippet.id !== id) return snippet;
     // new obj generates a new array
     Object.keys(newData).forEach(key => {
@@ -95,7 +99,6 @@ exports.update = async (id, newData) => {
     return snippet;
   });
   return writeJsonToDb('snippets', updateSnips);
-  console.log(filteredSnips);
 
   // find the entry with id
 };
