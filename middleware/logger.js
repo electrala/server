@@ -1,8 +1,5 @@
 const fs = require('fs').promises;
-
-function log(file) {
-  return fs.appendFile(`log.txt`, `${file}`);
-}
+const path = require('path');
 
 async function logger(request, response, next, file) {
   console.log(request.method, request.path, Date.now());

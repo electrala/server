@@ -1,5 +1,6 @@
 const express = require('express');
 const snippet = require('../models/Snippet.model');
+const snippets = require('../controllers/snippets.controller');
 
 const router = express.Router();
 
@@ -9,25 +10,14 @@ router.get('/', (request, response) => {
 });
 
 // GET ALL
-router.get('/api/snippets', async (request, response) => {
-  // get data from snippet model
-  const snippets = await snippet.select();
-  // send that data out
-  return response.send(snippets);
-});
+router.get('/api/snippets', snippets.getSnippets);
 
-// GET with Id
-router.get('/api/snippets/:id', (request, response) => {
-  response.send('got specific id ');
-});
+router.post('/api/snippets', snippets.createSnippet);
 
-// POST
-router.post('/api/snippets', (request, response) => {
-  response.send();
-});
-// UPDATE
-router.patch('/api/snippets/:id', (request, response) => {
-  response.send('updated');
+router.get('/api/snippets/:id', snippets.getSnippetById);
+
+router.patch('/api/snippets/:id', async (request, response) => {
+  const Snippet = await snippet.patch(request.body);
 });
 
 module.exports = router;
