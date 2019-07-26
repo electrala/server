@@ -9,7 +9,7 @@
 // What is a constructor,
 // What is a constructor?
 // WHat is a super?
-// Look up erro practices
+// Look up error practices
 
 class ErrHTTP extends Error {
   constructor(message, status = 500) {

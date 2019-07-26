@@ -10,7 +10,6 @@ exports.createSnippet = async (request, response) => {
 // the query is technically
 exports.getSnippets = async ({ query }, response) => {
   const Snippets = await snippet.select(query);
-  console.log(query);
   return response.send(Snippets);
 };
 
@@ -25,4 +24,24 @@ exports.getSnippetById = async (request, response) => {
   } catch (err) {
     if (err instanceof ErrorStatus) response.status(404).end(Error);
   }
+};
+
+exports.deleteSnippet = async (request, response) => {
+  const { id } = request.params;
+  const Snippets = await snippet.delete(id);
+
+  // Add error to delete when the id isnt there anymore
+  response.send(`deleted id: ${id}`);
+};
+
+exports.updateSnippet = async (request, response) => {
+  // need to bring in body as an object
+  const data = request.body;
+  // destructuring the file
+  const { id } = request.params;
+
+  console.log(data);
+  const Snippets = await snippet.update(id, data);
+
+  response.send(Snippets);
 };

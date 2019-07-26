@@ -72,7 +72,6 @@ exports.delete = async id => {
   const snippets = await readJsonFromDb('snippets');
   // filter snippets for everything except snippet.id
   const filteredSnips = await snippets.filter(snippet => snippet.id !== id);
-  console.log(filteredSnips);
   // write the file
   // comapring the filtered snippet id not tth
   if (filteredSnips.length === snippets.length) return;
