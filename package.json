@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ayanahawk/snippets_backed.git"
+    "url": "git+https://github.com/ayanahawk/users_backed.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ayanahawk/snippets_backed/issues"
+    "url": "https://github.com/ayanahawk/users_backed/issues"
   },
-  "homepage": "https://github.com/ayanahawk/snippets_backed#readme",
+  "homepage": "https://github.com/ayanahawk/users_backed#readme",
   "dependencies": {
     "express": "^4.17.1",
     "nodemon": "^1.19.1",

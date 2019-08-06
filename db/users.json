@@ -1,15 +1,5 @@
 [
   {
-    "id": "3",
-    "author": "Scott",
-    "code": "switch (numOfStudents) {\n  case 1:\n    // do something;\n    break;\n  case 2:\n  case 3:\n    // do something;\n    break;\n  default:\n  // do some default behavior.\n}",
-    "title": "switch.js",
-    "description": "Switch statement",
-    "language": "javascript",
-    "comments": [],
-    "favorites": 0
-  },
-  {
     "id": "bjU2JujN-",
     "author": "Ayana",
     "code": "code, code, code",
@@ -17,7 +7,13 @@
     "description": "Ayana got is ssss",
     "language": "javacript",
     "comments": [],
-    "favorites": 0
+    "favorites": 0,
+    "firstName": "Ayana The Queen ",
+    "lastName": "Dope",
+    "email": "thequeen@yahoo.com",
+    "city": "LA",
+    "state": "CA",
+    "field": "Dope new stuff"
   },
   {
     "id": "ZERW_WJw8",
@@ -128,5 +124,34 @@
     "language": "js",
     "comments": [],
     "favorites": 0
+  },
+  {
+    "id": "ZAniTqkJi",
+    "author": "Ayana",
+    "code": "I am an amazing coder!",
+    "title": "const.js",
+    "description": "declare your ish",
+    "language": "js",
+    "comments": [],
+    "favorites": 0
+  },
+  {
+    "id": "HNje5CFsr",
+    "firstName": "CJ",
+    "lastName": "HEYYE!",
+    "email": "ayanahakeh @gmail.vom",
+    "city": "culver city",
+    "state": "CA",
+    "field": "Film"
+  },
+  {
+    "id": "pvEE1ULYA",
+    "firstName": "Claude The Queen ",
+    "lastName": "Fresh",
+    "email": "thequeen@yahoo.com",
+    "city": "LA",
+    "state": "CA",
+    "field": "Dope new stuff",
+    "country": "Mexico"
   }
 ]
