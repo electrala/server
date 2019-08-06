@@ -11,5 +11,5 @@ app.use(logger);
 app.use(router);
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log('snipps runnin in server in port 5000');
+  console.log(' runnin in server in port 5000');
 });
