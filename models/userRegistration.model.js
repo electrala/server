@@ -4,14 +4,15 @@ const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
 /**
  * @typedef {Object} user
  * @property {sring} id
- * @property {string} author
- * @property {string} code
- * @property {sring} title
- * @property {string} author
- * @property {string} description
- * @property {string} language
- * @property {string} comments
- * @property {number} favorites
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {sring} email
+ * @property {string} userName
+ * @property {string} password
+ * @property {string} confirmPassword
+ * @property {string} pronoun
+ * @property {string} location
+
  */
 
 /** Read
@@ -37,9 +38,27 @@ exports.select = async (query = {}) => {
 
 // CREATE
 
-exports.insert = async ({ firstName, lastName, email, city, state, field }) => {
+exports.insert = async ({
+  firstName,
+  lastName,
+  email,
+  userName,
+  password,
+  confirmPassword,
+  pronoun,
+  location,
+}) => {
   try {
-    if (!firstName || !lastName || !email || !city || !field)
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !userName ||
+      !password ||
+      !confirmPassword ||
+      !pronoun ||
+      !location
+    )
       throw Error('Missing property');
     const users = await readJsonFromDb('users');
 
@@ -52,9 +71,11 @@ exports.insert = async ({ firstName, lastName, email, city, state, field }) => {
       firstName,
       lastName,
       email,
-      city,
-      state,
-      field,
+      userName,
+      password,
+      confirmPassword,
+      pronoun,
+      location,
     });
 
     await writeJsonToDb('users', users);
