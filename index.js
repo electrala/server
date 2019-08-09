@@ -1,5 +1,6 @@
+// names of the different paths
 const express = require('express');
-const router = require('./middleware/routes');
+const router = require('./middleware/registration.routes');
 const logger = require('./middleware/logger');
 const errorHandler = require('./utils/ErrHTTP');
 
