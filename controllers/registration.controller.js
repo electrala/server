@@ -1,4 +1,4 @@
-const userRegistration = require('../models/userRegistration.model');
+const userRegistration = require('../models/registration.model');
 const ErrorStatus = require('../utils/ErrHTTP');
 
 // CREATES USER
