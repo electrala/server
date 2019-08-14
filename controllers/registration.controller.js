@@ -2,13 +2,17 @@ const userRegistration = require('../models/registration.model');
 const ErrorStatus = require('../utils/ErrHTTP');
 
 // CREATES USER
-exports.createUser = async (request, response) => {
+exports.createUser = async (request, response, next) => {
   // sending a request to server
   // user registration is grabbing the path
-  const user = await userRegistration.insert(request.body);
-  // sending the response back to the user
-  response.status(201).send(user);
-  console.log(request.body, 'recieved');
+  try {
+    const user = await userRegistration.insert(request.body);
+    // sending the response back to the user
+    response.status(201).send(user);
+    console.log(request.body, 'recieved');
+  } catch (err) {
+    next(err);
+  }
 };
 
 // the query is technically

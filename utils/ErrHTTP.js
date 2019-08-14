@@ -1,6 +1,6 @@
 // what is error
 /**
- Error object containgi user friendly error messaging
+ Error object containing user friendly error messaging
  HTTP code status
 
  @param {string}
