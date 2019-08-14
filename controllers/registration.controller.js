@@ -1,6 +1,10 @@
 const userRegistration = require('../models/userRegistration.model');
 const ErrorStatus = require('../utils/ErrHTTP');
 
+/**
+ * @property {}
+ */
+
 exports.createUser = async (request, response) => {
   const user = await userRegistration.insert(request.body);
   response.status(201).send(user);
@@ -39,7 +43,6 @@ exports.updateUser = async (request, response) => {
   const data = request.body;
   // destructuring the file
   const { id } = request.params;
-
   const users = await userRegistration.update(id, data);
 
   response.send(users);
