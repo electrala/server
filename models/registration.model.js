@@ -59,7 +59,7 @@ exports.insert = async ({
       !pronoun ||
       !location
     )
-      throw Error('Missing property');
+      throw new Error('Missing property');
     const users = await readJsonFromDb('users');
 
     // read user.json

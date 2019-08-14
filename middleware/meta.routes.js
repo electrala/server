@@ -1,6 +1,10 @@
-const registrationRoute = require('./registration.routes');
-const critiquesRoute = require('./critiques.routes');
+const express = require('express');
+const registrationRouter = require('./registration.routes');
+// const critiquesRouter = require('./critiques.routes');
 
-const routeObj = { registrationRoute, critiquesRoute };
+const app = express();
 
-module.exports = routeObj;
+app.use('/api/registration', registrationRouter);
+// app.use('/api/critiques', critiquesRouter);
+
+module.exports = app;
