@@ -12,6 +12,7 @@ const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
  * @property {string} confirmPassword
  * @property {string} pronoun
  * @property {string} location
+ * 
 
  */
 
@@ -77,7 +78,6 @@ exports.insert = async ({
       pronoun,
       location,
     });
-
     await writeJsonToDb('users', users);
     return users[users.length[-1]];
   } catch (err) {
