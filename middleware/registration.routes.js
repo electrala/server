@@ -1,5 +1,5 @@
 const express = require('express');
-const newUsers = require('../controllers/registration.controller');
+const users = require('../controllers/registration.controller');
 
 const router = express.Router();
 
@@ -8,14 +8,14 @@ router.get('/', (request, response) => {
   response.send('Welcome to my server');
 });
 // Route that leads to geting all the users in our db
-router.get('/api/registration/allusers', newUsers.getUsers);
+router.get('/allusers', users.getUsers);
 // Route that leads to registering a new user in our db
-router.post('/register', newUsers.createUser);
+router.post('/register', users.createUser);
 // Route that selects a user in our db based on their ID
-router.get('/api/registration/user/:id', newUsers.getUserById);
+router.get('/user/:id', users.getUserById);
 // Route that updates a user in our db based on their ID
-router.patch('/api/registration/users/:id', newUsers.updateUser);
+router.patch('/users/:id', users.updateUser);
 // Route that deletes a user in our db based on their ID
-router.delete('/api/registration/user/:id', newUsers.deleteUser);
+router.delete('/user/:id', users.deleteUser);
 
 module.exports = router;
