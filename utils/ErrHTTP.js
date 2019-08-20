@@ -1,17 +1,12 @@
-// what is error
 /**
- Error object containing user friendly error messaging
- HTTP code status
-
- @param {string}
- 
+ * Error object containing user-friendly message and HTTP status code
  */
-// What is a constructor,
-// What is a constructor?
-// WHat is a super?
-// Look up error practices
 
 class ErrHTTP extends Error {
+  /**
+   * @param {string} message User-friendly error message
+   * @param {number} status  HTTP status code
+   */
   constructor(message, status = 500) {
     super(message);
     this.status = status;
