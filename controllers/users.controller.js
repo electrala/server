@@ -1,24 +1,38 @@
-const userRegistration = require('../models/registration.model');
-const ErrorStatus = require('../utils/ErrHTTP');
+/* eslint-disable camelcase */
 
-// CREATES USER
-exports.createUser = async (request, response, next) => {
-  // sending a request to server
-  // user registration is grabbing the path
+const Users = require('../models/Users.model');
+const ErrHTTP = require('../utils/ErrHTTP');
+
+/**
+ * Gets all the users in the database
+ * @param {object} response
+ * @param {object} request
+ * @param {object} next
+ * @returns {object} A JSON object of all users
+ */
+exports.getUsers = async (request, response, next) => {
   try {
-    const user = await userRegistration.insert(request.body);
-    // sending the response back to the user
-    response.status(201).send(user);
-    console.log(request.body, 'recieved');
+    const all_users = await Users.select();
+    return response.send(all_users);
   } catch (err) {
     next(err);
   }
 };
 
-// the query is technically
-exports.getUsers = async ({ query }, response) => {
-  const users = await userRegistration.select(query);
-  return response.send(users);
+/**
+ * Add a new user to the database.
+ * @param {object} response
+ * @param {object} request
+ * @param {object} next
+ * @returns {object} A JSON object of the new user
+ */
+exports.createUser = async (request, response, next) => {
+  try {
+    const new_user = await Users.insert(request.body);
+    response.status(201).send(new_user);
+  } catch (err) {
+    next(err);
+  }
 };
 
 // GETS USER BY THEIR ID
@@ -26,7 +40,7 @@ exports.getUserById = async (request, response) => {
   try {
     // will grab the user by their ID
     const { id } = request.params;
-    const users = await userRegistration.select({ id });
+    const users = await Users.select({ id });
 
     // checking if the user lenght is zero if so will throw an error
     if (users.length === 0) {
@@ -42,7 +56,7 @@ exports.getUserById = async (request, response) => {
 exports.deleteUser = async (request, response) => {
   // checking the user of ID
   const { id } = request.params;
-  await userRegistration.delete(id);
+  await Users.delete(id);
 
   // TODO: Add error to delete when the id isnt there anymore
   response.send(`deleted id: ${id}`);
@@ -56,7 +70,7 @@ exports.updateUser = async (request, response) => {
   // destructuring the file
   const { id } = request.params;
 
-  const users = await userRegistration.update(id, data);
+  const users = await Users.update(id, data);
 
   response.send(users);
 };

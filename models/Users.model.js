@@ -1,43 +1,45 @@
+/* eslint-disable camelcase */
+
 const shortid = require('shortid');
 const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
+const ErrHTTP = require('../utils/ErrHTTP');
 
 /**
- * @typedef {Object} user
- * @property {sring} id
+ * @typedef {Object} User
+ * @property {string} id
  * @property {string} firstName
  * @property {string} lastName
- * @property {sring} email
+ * @property {string} email
  * @property {string} userName
  * @property {string} password
  * @property {string} confirmPassword
  * @property {string} pronoun
  * @property {string} location
-
  */
 
-/** Read
- *Select a number from db.
- *can accept optional query object to filter results
+/**
+ * Selects all the objects in the database.
+ * Accepts optional query object to filter results.
  * @param {Object} [query]
  * @returns {Promise<[Object]>}
  */
-
 exports.select = async (query = {}) => {
   try {
-    const users = await readJsonFromDb('users');
-    const filtered = users.filter(user =>
+    const all_users = await readJsonFromDb('users');
+    const filtered_users = all_users.filter(user =>
       Object.keys(query).every(key => query[key] === user[key])
     );
-
-    return filtered;
+    return filtered_users;
   } catch (err) {
-    console.log('ERROR in users');
-    throw err;
+    throw new ErrHTTP('Database error');
   }
 };
 
-// CREATE
-
+/**
+ * Inserts a new user into the database.
+ * @param {User} newUser Data to create user
+ * @returns {Promise<Snippet>} Created user
+ */
 exports.insert = async ({
   firstName,
   lastName,
@@ -59,14 +61,9 @@ exports.insert = async ({
       !pronoun ||
       !location
     )
-      throw new Error('Missing property');
-    const users = await readJsonFromDb('users');
-
-    // read user.json
-    // grab data
-    // parse datat
-    // write to the file
-    users.push({
+      throw new ErrHTTP('Invalid user properties', 400);
+    const all_users = await readJsonFromDb('users');
+    all_users.push({
       id: shortid.generate(),
       firstName,
       lastName,
@@ -77,12 +74,11 @@ exports.insert = async ({
       pronoun,
       location,
     });
-
-    await writeJsonToDb('users', users);
-    return users[users.length[-1]];
+    await writeJsonToDb('users', all_users);
+    return all_users[all_users.length - 1];
   } catch (err) {
-    console.log(err, 'ERROR from user database');
-    throw err;
+    if (err instanceof ErrHTTP) throw err;
+    else throw new ErrHTTP('Database error');
   }
 };
 
