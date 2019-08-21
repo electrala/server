@@ -20,8 +20,8 @@ const ErrHTTP = require('../utils/ErrHTTP');
 /**
  * Selects all the objects in the database.
  * Accepts optional query object to filter results.
- * @param {Object} [query]
- * @returns {Promise<[Object]>}
+ * @param {Object} [query] User ID
+ * @returns {Promise<[Object]>} A JSON object of all relevant users
  */
 exports.select = async (query = {}) => {
   try {
@@ -38,7 +38,7 @@ exports.select = async (query = {}) => {
 /**
  * Inserts a new user into the database.
  * @param {User} newUser Data to create user
- * @returns {Promise<Snippet>} Created user
+ * @returns {Promise<Snippet>} A JSON object of the created user
  */
 exports.insert = async ({
   firstName,
@@ -82,6 +82,40 @@ exports.insert = async ({
   }
 };
 
+/**
+ * Updates a user in the database.
+ * @param {string} id User ID
+ * @param {User} newData Data to update user
+ * @returns {User} A JSON object of the updated user
+ * TODO: If given a new key, add it to the db
+ */
+exports.update = async (id, newData) => {
+  try {
+    let updated_user = {};
+    let id_found = false;
+
+    const users = await readJsonFromDb('users');
+    const updated_users = users.map(user => {
+      if (user.id !== id) return user;
+      Object.keys(newData).forEach(key => {
+        if (key in user) user[key] = newData[key];
+        else throw new ErrHTTP(`Key "${key}" does not exist`, 400);
+      });
+      updated_user = user;
+      id_found = true;
+      return user;
+    });
+    if (!id_found) {
+      throw new ErrHTTP('ID does not exist', 404);
+    }
+    await writeJsonToDb('users', updated_users);
+    return updated_user;
+  } catch (err) {
+    if (err instanceof ErrHTTP) throw err;
+    else throw new ErrHTTP('Database error');
+  }
+};
+
 // DELETE
 exports.delete = async id => {
   // Read in the db file
@@ -92,30 +126,4 @@ exports.delete = async id => {
   // comapring the filtered user id not tth
   if (filteredUsers.length === users.length) return;
   return writeJsonToDb('users', filteredUsers);
-};
-
-/**
- * @param {string} if-id of the user to update
- * @param {user} newData-subset of value
- * TODO: FYI if given a new key it will add it to the db
- */
-
-exports.update = async (id, newData) => {
-  // read in file
-  const users = await readJsonFromDb('users');
-  // map holds key values
-  const updateUsers = users.map(user => {
-    // if it is not the id I want, just return it.
-    if (user.id !== id) return user;
-    // new obj generates a new array
-    Object.keys(newData).forEach(key => {
-      // checking if newData has a key
-      if (key in user) user[key] = newData;
-      user[key] = newData[key];
-    });
-    return user;
-  });
-  return writeJsonToDb('users', updateUsers);
-
-  // find the entry with id
 };
