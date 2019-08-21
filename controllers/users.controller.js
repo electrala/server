@@ -55,8 +55,6 @@ exports.getUserById = async (request, response, next) => {
   }
 };
 
-// UPDATE user by their ID
-// TODO: add try catch to see if the ID is real
 /**
  * Updates a user given a unique ID & user data.
  * @param {object} request
