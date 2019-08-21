@@ -52,7 +52,12 @@ exports.getUserById = async (request, response) => {
   }
 };
 
-// DELETE user by ID
+/**
+ * DELETE user by ID
+ * @param {object} request
+ * @param {object} response
+ * @returns A JSON object with deleted user
+ */
 exports.deleteUser = async (request, response) => {
   // checking the user of ID
   const { id } = request.params;
