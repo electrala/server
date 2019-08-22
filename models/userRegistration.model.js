@@ -83,6 +83,7 @@ exports.delete = async id => {
  * TODO: FYI if given a new key it will add it to the db
  */
 
+// UPDATE
 exports.update = async (id, newData) => {
   // read in file
   const users = await readJsonFromDb('users');
