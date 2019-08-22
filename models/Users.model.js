@@ -90,7 +90,8 @@ exports.delete = async id => {
   const filteredUsers = await users.filter(user => user.id !== id);
   // write the file
   // comapring the filtered user id not tth
-  if (filteredUsers.length === users.length) return;
+  if (filteredUsers.length === users.length)
+    throw new ErrHTTP('User id not found', 404);
   return writeJsonToDb('users', filteredUsers);
 };
 
