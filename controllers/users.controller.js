@@ -73,12 +73,14 @@ exports.updateUser = async (request, response, next) => {
   }
 };
 
-// DELETE user by ID
+/**
+ * DELETE user by ID
+ * @param {object} request
+ * @param {object} response
+ * @returns A JSON object with deleted user
+ */
 exports.deleteUser = async (request, response) => {
-  // checking the user of ID
   const { id } = request.params;
   await Users.delete(id);
-
-  // TODO: Add error to delete when the id isnt there anymore
   response.send(`deleted id: ${id}`);
 };

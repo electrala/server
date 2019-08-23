@@ -13,5 +13,5 @@ app.use('/', router);
 app.use(errorHandler);
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log('Runnin server at port 5000');
+  console.log('Running server at port 5000');
 });

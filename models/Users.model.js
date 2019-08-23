@@ -116,14 +116,22 @@ exports.update = async (id, newData) => {
   }
 };
 
-// DELETE
+/**
+ * Deletes a user in the database with matching id
+ * @param {string} id user ID
+ * @returns {User} A JSON object of the updated user
+ */
 exports.delete = async id => {
-  // Read in the db file
-  const users = await readJsonFromDb('users');
-  // filter users for everything except user.id
-  const filteredUsers = await users.filter(user => user.id !== id);
-  // write the file
-  // comapring the filtered user id not tth
-  if (filteredUsers.length === users.length) return;
-  return writeJsonToDb('users', filteredUsers);
+  try {
+    // Read in the db file
+    const users = await readJsonFromDb('users');
+    // filter users for everything except user.id
+    const filteredUsers = await users.filter(user => user.id !== id);
+    if (filteredUsers.length === users.length)
+      throw new ErrHTTP('User id not found', 404);
+    return writeJsonToDb('users', filteredUsers);
+  } catch (err) {
+    if (err instanceof ErrHTTP) throw err;
+    else throw new ErrHTTP('Database error');
+  }
 };
