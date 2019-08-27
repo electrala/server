@@ -1,157 +1,35 @@
 [
   {
-    "id": "bjU2JujN-",
-    "author": "Ayana",
-    "code": "code, code, code",
-    "title": "Ayana is the best",
-    "description": "Ayana got is ssss",
-    "language": "javacript",
-    "comments": [],
-    "favorites": 0,
-    "firstName": "Ayana The Queen ",
-    "lastName": "Dope",
-    "email": "thequeen@yahoo.com",
-    "city": "LA",
-    "state": "CA",
-    "field": "Dope new stuff"
+    "id": "pTgeJuBSI",
+    "firstName": "Dandy",
+    "lastName": "Fly Guy",
+    "email": "hfiodhf @gmai",
+    "userName": "too good",
+    "password": "hello",
+    "confirmPassword": "hit",
+    "pronoun": "Lit ",
+    "location": "LA"
   },
   {
-    "id": "ZERW_WJw8",
-    "author": "Ayana",
-    "code": "code, code, code",
-    "title": "Ayana is the best",
-    "description": "Ayana got is ssss",
-    "language": "javacript",
-    "comments": [],
-    "favorites": 0
+    "id": "DHluBRc9g",
+    "firstName": "B",
+    "lastName": "Newt",
+    "email": "hobknocker@gmail.com",
+    "userName": "4U",
+    "password": "y33t",
+    "confirmPassword": "y33t",
+    "pronoun": "Litx",
+    "location": "LA"
   },
   {
-    "id": "xv9ghClbh",
-    "author": "Ayana",
-    "code": "code, code, code",
-    "title": "Ayana is the best",
-    "description": "Ayana got is ssss",
-    "language": "javacript",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "SucVXOuSZ",
-    "author": "Ayana",
-    "code": "code, code, code",
-    "title": "Ayana is the best",
-    "description": "Ayana got is ssss",
-    "language": "javacript",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "K2FJuKSS0",
-    "author": "Chris",
-    "code": "code, code, code",
-    "title": "Ayana is the best",
-    "description": "Ayana got is ssss",
-    "language": "javacript",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "ANU9sZoSr",
-    "author": "Chris",
-    "code": "code, code, code",
-    "title": "Ayana is the best",
-    "description": "Ayana got is ssss",
-    "language": "javacript",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "HA8lprvtv",
-    "author": "Chris",
-    "code": "code, code, code",
-    "title": "Ayana is the best",
-    "description": "Ayana got is ssss",
-    "language": "javacript",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "gC878qhvQ",
-    "author": "Ayana",
-    "code": "Const",
-    "title": "const.js",
-    "description": "declare your ish",
-    "language": "js",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "zU0drcq4I",
-    "author": "Ayana",
-    "code": "Const",
-    "title": "const.js",
-    "description": "declare your ish",
-    "language": "js",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "JQqVK6Hxt",
-    "author": "Ayana",
-    "code": "Const",
-    "title": "const.js",
-    "description": "declare your ish",
-    "language": "js",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "MaJNsE2IM",
-    "author": "Ayana",
-    "code": "I am an amazing coder!",
-    "title": "const.js",
-    "description": "declare your ish",
-    "language": "js",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "4FBlxVN7R",
-    "author": "Ayana",
-    "code": "I am an amazing coder!",
-    "title": "const.js",
-    "description": "declare your ish",
-    "language": "js",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "ZAniTqkJi",
-    "author": "Ayana",
-    "code": "I am an amazing coder!",
-    "title": "const.js",
-    "description": "declare your ish",
-    "language": "js",
-    "comments": [],
-    "favorites": 0
-  },
-  {
-    "id": "HNje5CFsr",
-    "firstName": "CJ",
-    "lastName": "HEYYE!",
-    "email": "ayanahakeh @gmail.vom",
-    "city": "culver city",
-    "state": "CA",
-    "field": "Film"
-  },
-  {
-    "id": "pvEE1ULYA",
-    "firstName": "Claude The Queen ",
-    "lastName": "Fresh",
-    "email": "thequeen@yahoo.com",
-    "city": "LA",
-    "state": "CA",
-    "field": "Dope new stuff",
-    "country": "Mexico"
+    "id": "7hjNzs6cL",
+    "firstName": "J",
+    "lastName": ".",
+    "email": "whatever@gmail.com",
+    "userName": "superShort13",
+    "password": "cabin1234",
+    "confirmPassword": "cabin1234",
+    "pronoun": "he",
+    "location": "LA"
   }
 ]
