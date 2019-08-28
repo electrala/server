@@ -2,19 +2,14 @@ const express = require('express');
 const users = require('../controllers/users.controller');
 
 const router = express.Router();
-
-// Gets all the users in the database
+// Gets all   /users/allusers
 router.get('/allusers', users.getUsers);
-
-// Adds a new user to the database
+// Adds a new /users/register
 router.post('/register', users.createUser);
-
-// Selects a user given a unique ID
+// Selects a user  users/user/id
 router.get('/user/:id', users.getUserById);
-
-// Updates a user given a unique ID & user data
+// Updates a    users/users/id
 router.patch('/users/:id', users.updateUser);
-
 // Deletes a user from the database based on their ID
 router.delete('/user/:id', users.deleteUser);
 
