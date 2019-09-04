@@ -25,7 +25,6 @@
 
 ### Current Version:
 - Working users database
-- Routes for critiques database
 - Meta router
 
 ### To Do:
