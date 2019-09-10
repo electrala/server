@@ -22,7 +22,7 @@ exports.createCritique = async (request, response, next) => {
   }
 };
 
-exports.getCritiquesByUsername = async (
+exports.getCritiqueByUsername = async (
   { params: { username } },
   response,
   next

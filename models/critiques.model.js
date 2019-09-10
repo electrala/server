@@ -9,11 +9,10 @@ exports.select = async (query = {}) => {
       .join(' AND ');
 
     const queryString = format(
-      `SELECT * FROM critiques ${
-        andClause.length ? `WHERE ${andClause}` : ''
-      } ORDER BY username`,
+      `SELECT * FROM critiques ${andClause.length ? `WHERE ${andClause}` : ''}`,
       ...Object.keys(query)
     );
+    console.log(Object.values(query));
     const result = await db.query(queryString, Object.values(query));
     return result.rows;
   } catch (err) {
@@ -56,13 +55,12 @@ exports.update = async (id, newData) => {
 
 exports.delete = async ({ id }) => {
   try {
-    const result = await db.query(`DELETE FROM critiques WHERE id = $1`, [id]); 
+    const result = await db.query(`DELETE FROM critiques WHERE id = $1`, [id]);
     if (result.rowCount === 0) {
-      throw new ErrHTTP('Critique @ id: ${id} does not exist', 404); 
+      throw new ErrHTTP('Critique @ id: ${id} does not exist', 404);
     }
-    catch (err) {
-      if (err instanceof ErrHTTP) throw err; 
-      else throw new ErrHTTP('database error'); 
-    }
+  } catch (err) {
+    if (err instanceof ErrHTTP) throw err;
+    else throw new ErrHTTP('database error');
   }
-}; 
+};

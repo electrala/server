@@ -1,16 +1,16 @@
 const express = require('express');
-const users = require('../controllers/critiques.controller');
+const critiques = require('../controllers/critiques.controller');
 
 const router = express.Router();
 
 // Gets all   /critiques/allcritiques
-router.get('/allcritiques', critiques.getCritiques);
+router.get('/all', critiques.getCritiques);
 
 // Adds a new /critiques/register
-router.post('/register', critiques.createCritique);
+router.post('/critique', critiques.createCritique);
 
-// Selects a critique  critiques/user/id
-router.get('/critique/:id', critiques.getCritiqueByUsername);
+// Selects a critique  critiques/user
+router.get('/critique/:user', critiques.getCritiqueByUsername);
 
 // Updates a    critiques/critiques/id
 router.patch('/critique/:id', critiques.updateCritique);
