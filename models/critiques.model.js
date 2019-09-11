@@ -9,10 +9,11 @@ exports.select = async (query = {}) => {
       .join(' AND ');
 
     const queryString = format(
-      `SELECT * FROM critiques ${andClause.length ? `WHERE ${andClause}` : ''}`,
+      `SELECT * FROM critiques ${
+        andClause.length ? `WHERE ${andClause}` : ''
+      } ORDER BY id`,
       ...Object.keys(query)
     );
-    console.log(Object.values(query));
     const result = await db.query(queryString, Object.values(query));
     return result.rows;
   } catch (err) {
@@ -20,14 +21,14 @@ exports.select = async (query = {}) => {
   }
 };
 
-exports.insert = async ({ title, description, genre, questions }) => {
+exports.insert = async ({ username, title, description, genre, questions }) => {
   try {
-    if (!title || !description || !genre || !questions)
+    if (!username || !title || !description || !genre || !questions)
       throw new ErrHTTP('Missing properties', 400);
     await db.query(
-      `INSERT INTO critiques (title, description, genre, questions)
+      `INSERT INTO critiques (username, title, description, genre, questions)
       VALUES ($1, $2, $3, $4, $5)`,
-      [title, description, genre, questions]
+      [username, title, description, genre, questions]
     );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
@@ -35,16 +36,17 @@ exports.insert = async ({ title, description, genre, questions }) => {
   }
 };
 
-exports.update = async (id, newData) => {
+exports.update = async ({ id }, newData) => {
   try {
     const { title, description, genre, questions } = newData;
     await db.query(
       `UPDATE critiques 
-    SET title = COALESCE($2, title), 
-    description = COALESCE($3, description), 
-    genre = COALESCE($4, genre), 
-    questions = COALESCE($5, questions)
-    WHERE id = ($1)`,
+       SET
+         title = COALESCE($2, title), 
+         description = COALESCE($3, description), 
+         genre = COALESCE($4, genre), 
+         questions = COALESCE($5, questions)
+       WHERE id = ($1)`,
       [id, title, description, genre, questions]
     );
   } catch (err) {

@@ -28,7 +28,7 @@ exports.getCritiqueByUsername = async (
   next
 ) => {
   try {
-    const critique = await Critique.select({ username });
+    const critique = await Critiques.select({ username });
     if (!critique.length) {
       throw new ErrHTTP('User does not exist', 404);
     }
@@ -38,9 +38,12 @@ exports.getCritiqueByUsername = async (
   }
 };
 
-exports.updateCritique = async (requst, response, next) => {
+exports.updateCritique = async (request, response, next) => {
   try {
-    const updated_critique = await Critique.update(request.params, requst.body);
+    const updated_critique = await Critiques.update(
+      request.params,
+      request.body
+    );
     response.send(updated_critique);
   } catch (err) {
     next(err);
@@ -49,7 +52,7 @@ exports.updateCritique = async (requst, response, next) => {
 
 exports.deleteCritique = async ({ params: { id } }, response, next) => {
   try {
-    await Critique.delete({ id });
+    await Critiques.delete({ id });
     response.send(`Critique "${id}" deleted successfully`);
   } catch (err) {
     next(err);
