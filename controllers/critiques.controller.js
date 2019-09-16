@@ -16,7 +16,7 @@ exports.getCritiques = async (request, response, next) => {
 exports.createCritique = async (request, response, next) => {
   try {
     const new_critique = await Critiques.insert(request.body);
-    response.status(201).send(new_critique);
+    response.send(new_critique);
   } catch (err) {
     next(err);
   }
