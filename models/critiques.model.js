@@ -17,6 +17,7 @@ exports.select = async (query = {}) => {
     const result = await db.query(queryString, Object.values(query));
     return result.rows;
   } catch (err) {
+    console.error(err);
     throw new ErrHTTP('Database Error');
   }
 };
