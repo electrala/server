@@ -29,7 +29,8 @@ exports.getUsers = async (request, response, next) => {
 exports.createUser = async (request, response, next) => {
   try {
     const new_user = await Users.insert(request.body);
-    response.status(201).send(new_user);
+    console.log(new_user);
+    return response.status(201).json(new_user);
   } catch (err) {
     next(err);
   }
