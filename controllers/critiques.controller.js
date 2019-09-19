@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-const Critiques = require('../models/Critique.model');
+const Critiques = require('../models/Critiques.model');
 
 const ErrHTTP = require('../utils/ErrHTTP');
 
