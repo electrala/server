@@ -60,7 +60,7 @@ exports.delete = async ({ id }) => {
   try {
     const result = await db.query(`DELETE FROM critiques WHERE id = $1`, [id]);
     if (result.rowCount === 0) {
-      throw new ErrHTTP('Critique @ id: ${id} does not exist', 404);
+      throw new ErrHTTP(`Critique @ id: ${id} does not exist`, 404);
     }
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;

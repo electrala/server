@@ -9,6 +9,9 @@ router.get('/all', critiques.getCritiques);
 // Adds a new /critiques/new
 router.post('/new', critiques.createCritique);
 
+// Select a single critique by ID
+router.get('/:id', critiques.getCritiqueByID);
+
 // Selects a critique  critiques/user
 router.get('/user/:username', critiques.getCritiqueByUsername);
 
