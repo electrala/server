@@ -1,0 +1,23 @@
+{
+    "sqltools.connections": [
+        {
+            "connectionTimeout": 0,
+            "database": "hawk-postgress",
+            "dialect": "PostgreSQL",
+            "name": "hawk-postgress",
+            "password": "Mangos407!",
+            "port": 5432,
+            "server": "localhost",
+            "username": "ahawk"
+        },
+        {
+            "database": "snips",
+            "dialect": "PostgreSQL",
+            "name": "hawk-postgres",
+            "password": "Mangos407!",
+            "port": 5432,
+            "server": "localhost",
+            "username": "ahawk"
+        }
+    ]
+}
