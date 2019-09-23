@@ -16,23 +16,39 @@ exports.getCritiques = async (request, response, next) => {
 exports.createCritique = async (request, response, next) => {
   try {
     const new_critique = await Critiques.insert(request.body);
-    response.status(201).send(new_critique);
+    response.send(new_critique);
   } catch (err) {
     next(err);
   }
 };
 
+// Get All critiques from a particular user
 exports.getCritiqueByUsername = async (
   { params: { username } },
   response,
   next
 ) => {
   try {
-    const critique = await Critiques.select({ username });
+    const critiques = await Critiques.select({ username });
+    if (!critiques.length) {
+      throw new ErrHTTP('User does not exist', 404);
+    }
+    console.log(critiques);
+    response.send(critiques);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get critique by ID
+exports.getCritiqueByID = async ({ params: { id } }, response, next) => {
+  try {
+    const critique = await Critiques.select({ id });
     if (!critique.length) {
       throw new ErrHTTP('User does not exist', 404);
     }
-    response.send(critique[0]);
+    console.log(critique);
+    response.send(critique);
   } catch (err) {
     next(err);
   }

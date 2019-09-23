@@ -13,4 +13,9 @@ router.patch('/users/:id', users.updateUser);
 // Deletes a user from the database based on their ID
 router.delete('/user/:id', users.deleteUser);
 
+// this route is for testing delete once complete
+router.get('/test', (req, res) => {
+  res.send('test success');
+});
+
 module.exports = router;
