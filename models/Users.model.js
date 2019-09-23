@@ -111,29 +111,21 @@ exports.insert = async ({
  * TODO: If given a new key, add it to the db
  */
 exports.update = async (id, newData) => {
-  // try {
-  //   let updated_user = {};
-  //   let id_found = false;
-
-  //   const users = await readJsonFromDb('users');
-  //   const updated_users = users.map(user => {
-  //     if (user.id !== id) return user;
-  //     Object.keys(newData).forEach(key => {
-  //       if (key in user) user[key] = newData[key];
-  //       else throw new ErrHTTP(`Key "${key}" does not exist`, 400);
-  //     });
-  //     updated_user = user;
-  //     id_found = true;
-  //     return user;
-  //   });
-  //   if (!id_found) {
-  //     throw new ErrHTTP('ID does not exist', 404);
-  //   }
-  //   await writeJsonToDb('users', updated_users);
-  //   return updated_user;
-  // } 
   try {
-
+    if (!id) throw new ErrHTTP('Missing id', 400);
+    const { firstName, lastName, email, username, pronoun, location } = newData;
+    await db.query(
+      `UPDATE users
+      SET
+        firstName = COALESCE($2, firstName),
+        lastName = COALESCE($3, lastName),
+        email = COALESCE($4, email),
+        username = COALESCE($5, username),
+        pronoun = COALESCE($6, pronoun),
+        location = COALESCE($7, location)
+      WHERE id = ($1)`,
+      [id, firstName, lastName, email, username, pronoun, location]
+    );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');
@@ -147,13 +139,10 @@ exports.update = async (id, newData) => {
  */
 exports.delete = async id => {
   try {
-    // Read in the db file
-    const users = await readJsonFromDb('users');
-    // filter users for everything except user.id
-    const filteredUsers = await users.filter(user => user.id !== id);
-    if (filteredUsers.length === users.length)
-      throw new ErrHTTP('User id not found', 404);
-    return writeJsonToDb('users', filteredUsers);
+    const result = await db.query(`DELETE FROM users WHERE id = $1`, [id]);
+    if (result.rowCount === 0) {
+      throw new ErrHTTP(`User @ id: ${id} does not exist`, 401);
+    }
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');
