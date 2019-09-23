@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 
 const shortid = require('shortid');
+const bcrypt = require('bcrypt');
+const format = require('pg-format');
+const db = require('../db');
+
 const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
 const ErrHTTP = require('../utils/ErrHTTP');
 
@@ -25,11 +29,19 @@ const ErrHTTP = require('../utils/ErrHTTP');
  */
 exports.select = async (query = {}) => {
   try {
-    const all_users = await readJsonFromDb('users');
-    const filtered_users = all_users.filter(user =>
-      Object.keys(query).every(key => query[key] === user[key])
+    const selectUser = Object.keys(query)
+      .map((key, i) => `%I=$${i + 1}`)
+      .join(' AND ');
+    const formattedSelect = format(
+      `SELECT * FROM users ${selectUser.length ? `WHERE ${selectUser}` : ''}`,
+      ...Object.keys(query)
     );
-    return filtered_users;
+    // const all_users = await readJsonFromDb('users');
+    // const filtered_users = all_users.filter(user =>
+    //   Object.keys(query).every(key => query[key] === user[key])
+    // );
+    // return filtered_users;
+    return selectUser;
   } catch (err) {
     throw new ErrHTTP('Database error');
   }
@@ -62,20 +74,29 @@ exports.insert = async ({
       !location
     )
       throw new ErrHTTP('Invalid user properties', 400);
-    const all_users = await readJsonFromDb('users');
-    all_users.push({
-      id: shortid.generate(),
-      firstName,
-      lastName,
-      email,
-      userName,
-      password,
-      confirmPassword,
-      pronoun,
-      location,
-    });
-    await writeJsonToDb('users', all_users);
-    return all_users[all_users.length - 1];
+    const hashedPassword = await bcrypt.hash(password, 2);
+    await db.query(
+      `INSERT INTO users (  
+        firstName,
+        lastName,
+        email,
+        userName,
+        password,
+        confirmPassword,
+        pronoun,
+        location)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [
+        firstName,
+        lastName,
+        email,
+        userName,
+        hashedPassword,
+        confirmPassword,
+        pronoun,
+        location,
+      ]
+    );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');
