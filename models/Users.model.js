@@ -36,12 +36,8 @@ exports.select = async (query = {}) => {
       `SELECT * FROM users ${selectUser.length ? `WHERE ${selectUser}` : ''}`,
       ...Object.keys(query)
     );
-    // const all_users = await readJsonFromDb('users');
-    // const filtered_users = all_users.filter(user =>
-    //   Object.keys(query).every(key => query[key] === user[key])
-    // );
-    // return filtered_users;
-    return selectUser;
+    const results = await db.query(formattedSelect, Object.values(query));
+    return results.rows;
   } catch (err) {
     throw new ErrHTTP('Database error');
   }
