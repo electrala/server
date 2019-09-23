@@ -45,7 +45,6 @@ exports.createUser = async (request, response, next) => {
  */
 exports.getUserById = async (request, response, next) => {
   try {
-    console.log(request.params);
     const { userid } = request.params;
     const user = await Users.select({ userid });
     if (user.length === 0) {
