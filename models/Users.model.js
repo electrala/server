@@ -90,26 +90,29 @@ exports.insert = async ({
  * TODO: If given a new key, add it to the db
  */
 exports.update = async (id, newData) => {
-  try {
-    let updated_user = {};
-    let id_found = false;
+  // try {
+  //   let updated_user = {};
+  //   let id_found = false;
 
-    const users = await readJsonFromDb('users');
-    const updated_users = users.map(user => {
-      if (user.id !== id) return user;
-      Object.keys(newData).forEach(key => {
-        if (key in user) user[key] = newData[key];
-        else throw new ErrHTTP(`Key "${key}" does not exist`, 400);
-      });
-      updated_user = user;
-      id_found = true;
-      return user;
-    });
-    if (!id_found) {
-      throw new ErrHTTP('ID does not exist', 404);
-    }
-    await writeJsonToDb('users', updated_users);
-    return updated_user;
+  //   const users = await readJsonFromDb('users');
+  //   const updated_users = users.map(user => {
+  //     if (user.id !== id) return user;
+  //     Object.keys(newData).forEach(key => {
+  //       if (key in user) user[key] = newData[key];
+  //       else throw new ErrHTTP(`Key "${key}" does not exist`, 400);
+  //     });
+  //     updated_user = user;
+  //     id_found = true;
+  //     return user;
+  //   });
+  //   if (!id_found) {
+  //     throw new ErrHTTP('ID does not exist', 404);
+  //   }
+  //   await writeJsonToDb('users', updated_users);
+  //   return updated_user;
+  // } 
+  try {
+
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');
