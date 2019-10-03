@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
   "workbench.colorCustomizations": {
     "activityBar.background": "#26394d",
     "activityBar.foreground": "#e7e7e7",
@@ -14,4 +15,21 @@
     "statusBar.foreground": "#e7e7e7"
   },
   "peacock.color": "#15202b"
+=======
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#75c4b7",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#a24cb3",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "titleBar.activeBackground": "#51b5a4",
+        "titleBar.inactiveBackground": "#51b5a499",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveForeground": "#15202b99",
+        "statusBar.background": "#51b5a4",
+        "statusBarItem.hoverBackground": "#3f9486",
+        "statusBar.foreground": "#15202b"
+    },
+    "peacock.color": "#51B5A4"
+>>>>>>> Stashed changes
 }
