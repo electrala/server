@@ -54,10 +54,10 @@ exports.insert = async ({
   email,
   userName,
   password,
-  confirmPassword,
   pronoun,
   location,
 }) => {
+  console.log(firstName);
   try {
     if (
       !firstName ||
@@ -65,7 +65,6 @@ exports.insert = async ({
       !email ||
       !userName ||
       !password ||
-      !confirmPassword ||
       !pronoun ||
       !location
     )
@@ -78,20 +77,10 @@ exports.insert = async ({
         email,
         userName,
         password,
-        confirmPassword,
         pronoun,
         location)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-      [
-        firstName,
-        lastName,
-        email,
-        userName,
-        hashedPassword,
-        confirmPassword,
-        pronoun,
-        location,
-      ]
+        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [firstName, lastName, email, userName, hashedPassword, pronoun, location]
     );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
