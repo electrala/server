@@ -45,8 +45,8 @@ exports.createUser = async (request, response, next) => {
  */
 exports.getUserById = async (request, response, next) => {
   try {
-    const { id } = request.params;
-    const user = await Users.select({ id });
+    const { userid } = request.params;
+    const user = await Users.select({ userid });
     if (user.length === 0) {
       throw new ErrHTTP('ID does not exist', 404);
     }

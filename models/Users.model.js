@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 
 const shortid = require('shortid');
+const bcrypt = require('bcrypt');
+const format = require('pg-format');
+const db = require('../db');
+
 const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
 const ErrHTTP = require('../utils/ErrHTTP');
 
@@ -25,11 +29,15 @@ const ErrHTTP = require('../utils/ErrHTTP');
  */
 exports.select = async (query = {}) => {
   try {
-    const all_users = await readJsonFromDb('users');
-    const filtered_users = all_users.filter(user =>
-      Object.keys(query).every(key => query[key] === user[key])
+    const selectUser = Object.keys(query)
+      .map((key, i) => `%I=$${i + 1}`)
+      .join(' AND ');
+    const formattedSelect = format(
+      `SELECT * FROM users ${selectUser.length ? `WHERE ${selectUser}` : ''}`,
+      ...Object.keys(query)
     );
-    return filtered_users;
+    const results = await db.query(formattedSelect, Object.values(query));
+    return results.rows;
   } catch (err) {
     throw new ErrHTTP('Database error');
   }
@@ -62,20 +70,29 @@ exports.insert = async ({
       !location
     )
       throw new ErrHTTP('Invalid user properties', 400);
-    const all_users = await readJsonFromDb('users');
-    all_users.push({
-      id: shortid.generate(),
-      firstName,
-      lastName,
-      email,
-      userName,
-      password,
-      confirmPassword,
-      pronoun,
-      location,
-    });
-    await writeJsonToDb('users', all_users);
-    return all_users[all_users.length - 1];
+    const hashedPassword = await bcrypt.hash(password, 2);
+    await db.query(
+      `INSERT INTO users (  
+        firstName,
+        lastName,
+        email,
+        userName,
+        password,
+        confirmPassword,
+        pronoun,
+        location)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [
+        firstName,
+        lastName,
+        email,
+        userName,
+        hashedPassword,
+        confirmPassword,
+        pronoun,
+        location,
+      ]
+    );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');
@@ -91,25 +108,20 @@ exports.insert = async ({
  */
 exports.update = async (id, newData) => {
   try {
-    let updated_user = {};
-    let id_found = false;
-
-    const users = await readJsonFromDb('users');
-    const updated_users = users.map(user => {
-      if (user.id !== id) return user;
-      Object.keys(newData).forEach(key => {
-        if (key in user) user[key] = newData[key];
-        else throw new ErrHTTP(`Key "${key}" does not exist`, 400);
-      });
-      updated_user = user;
-      id_found = true;
-      return user;
-    });
-    if (!id_found) {
-      throw new ErrHTTP('ID does not exist', 404);
-    }
-    await writeJsonToDb('users', updated_users);
-    return updated_user;
+    if (!id) throw new ErrHTTP('Missing id', 400);
+    const { firstName, lastName, email, username, pronoun, location } = newData;
+    await db.query(
+      `UPDATE users
+      SET
+        firstName = COALESCE($2, firstName),
+        lastName = COALESCE($3, lastName),
+        email = COALESCE($4, email),
+        username = COALESCE($5, username),
+        pronoun = COALESCE($6, pronoun),
+        location = COALESCE($7, location)
+      WHERE id = ($1)`,
+      [id, firstName, lastName, email, username, pronoun, location]
+    );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');
@@ -123,13 +135,10 @@ exports.update = async (id, newData) => {
  */
 exports.delete = async id => {
   try {
-    // Read in the db file
-    const users = await readJsonFromDb('users');
-    // filter users for everything except user.id
-    const filteredUsers = await users.filter(user => user.id !== id);
-    if (filteredUsers.length === users.length)
-      throw new ErrHTTP('User id not found', 404);
-    return writeJsonToDb('users', filteredUsers);
+    const result = await db.query(`DELETE FROM users WHERE id = $1`, [id]);
+    if (result.rowCount === 0) {
+      throw new ErrHTTP(`User @ id: ${id} does not exist`, 401);
+    }
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');

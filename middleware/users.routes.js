@@ -7,7 +7,7 @@ router.get('/allusers', users.getUsers);
 // Adds a new /users/register
 router.post('/register', users.createUser);
 // Selects a user  users/user/id
-router.get('/user/:id', users.getUserById);
+router.get('/user/:userid', users.getUserById);
 // Updates a    users/users/id
 router.patch('/users/:id', users.updateUser);
 // Deletes a user from the database based on their ID
