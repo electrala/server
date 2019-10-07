@@ -1,11 +1,9 @@
 /* eslint-disable camelcase */
 
-const shortid = require('shortid');
 const bcrypt = require('bcrypt');
 const format = require('pg-format');
 const db = require('../db');
 
-const { readJsonFromDb, writeJsonToDb } = require('../utils/db.utils.js');
 const ErrHTTP = require('../utils/ErrHTTP');
 
 /**
@@ -29,6 +27,12 @@ const ErrHTTP = require('../utils/ErrHTTP');
  */
 exports.select = async (query = {}) => {
   try {
+    if (typeof query === 'string') {
+      const queryString = `SELECT * from users WHERE username = $1`;
+      const param = query;
+      const result = await db.query(queryString, [param]);
+      return result.rows[0];
+    }
     const selectUser = Object.keys(query)
       .map((key, i) => `%I=$${i + 1}`)
       .join(' AND ');
@@ -57,7 +61,6 @@ exports.insert = async ({
   pronoun,
   location,
 }) => {
-  console.log(firstName);
   try {
     if (
       !firstName ||
@@ -70,7 +73,7 @@ exports.insert = async ({
     )
       throw new ErrHTTP('Invalid user properties', 400);
     const hashedPassword = await bcrypt.hash(password, 2);
-    await db.query(
+    const result = await db.query(
       `INSERT INTO users (  
         firstName,
         lastName,
@@ -82,6 +85,7 @@ exports.insert = async ({
         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [firstName, lastName, email, userName, hashedPassword, pronoun, location]
     );
+    return result.rows[0];
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('Database error');
