@@ -15,10 +15,6 @@ exports.getCritiques = async (request, response, next) => {
 
 exports.createCritique = async (request, response, next) => {
   try {
-    // console.log(request);
-    // create variable which adds location url from aws to req.body
-    // then pass that variable through to the Critiques.insert function instead of just req.body.
-    // so that way we are passing in all we need for the front end into our SQL database
     const new_critique = await Critiques.insert(request.body);
     response.send(new_critique);
   } catch (err) {
