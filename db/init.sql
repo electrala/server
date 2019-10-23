@@ -7,20 +7,18 @@ CREATE TABLE critiques
   title TEXT,
   description TEXT,
   questions TEXT,
-  s3locationurl TEXT,
   genre TEXT,
-  comments TEXT
-  []
+  s3locationurl TEXT
 );
-  CREATE TABLE users
-  (
-    id SERIAL PRIMARY KEY,
-    firstName TEXT,
-    lastName TEXT,
-    email TEXT,
-    userName TEXT,
-    password TEXT,
-    confirmPassword TEXT,
-    pronoun TEXT,
-    location TEXT
-  )
+CREATE TABLE users
+(
+  id SERIAL PRIMARY KEY,
+  firstName TEXT,
+  lastName TEXT,
+  email TEXT,
+  userName TEXT,
+  password TEXT,
+  confirmPassword TEXT,
+  pronoun TEXT,
+  location TEXT
+)

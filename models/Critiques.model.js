@@ -32,13 +32,14 @@ exports.insert = async ({ username, title, description, genre, questions, s3loca
     console.log(genre);
     console.log(questions);
     console.log(s3locationurl);
-    if (!username || !title || !description || !genre || !questions || !s3LocationURL)
+    if (!username || !title || !description || !genre || !questions || !s3locationurl)
       throw new ErrHTTP('Missing properties', 400);
-    await db.query(
+    const result = await db.query(
       `INSERT INTO critiques (username, title, description, genre, questions, s3locationurl)
       VALUES ($1, $2, $3, $4, $5, $6)`,
       [username, title, description, genre, questions, s3locationurl]
     );
+    console.log(result);
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('database error');
