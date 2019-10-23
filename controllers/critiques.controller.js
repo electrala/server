@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 
-const Critiques = require('../models/Critiques.model');
+const Critiques = require("../models/Critiques.model");
 
-const ErrHTTP = require('../utils/ErrHTTP');
+const ErrHTTP = require("../utils/ErrHTTP");
 
 exports.getCritiques = async (request, response, next) => {
   try {
@@ -15,7 +15,6 @@ exports.getCritiques = async (request, response, next) => {
 
 exports.createCritique = async (request, response, next) => {
   try {
-    // console.log(request);
     const new_critique = await Critiques.insert(request.body);
     response.send(new_critique);
   } catch (err) {
@@ -32,7 +31,7 @@ exports.getCritiqueByUsername = async (
   try {
     const critiques = await Critiques.select({ username });
     if (!critiques.length) {
-      throw new ErrHTTP('User does not exist', 404);
+      throw new ErrHTTP("User does not exist", 404);
     }
     console.log(critiques);
     response.send(critiques);
@@ -46,7 +45,7 @@ exports.getCritiqueByID = async ({ params: { id } }, response, next) => {
   try {
     const critique = await Critiques.select({ id });
     if (!critique.length) {
-      throw new ErrHTTP('User does not exist', 404);
+      throw new ErrHTTP("User does not exist", 404);
     }
     console.log(critique);
     response.send(critique);

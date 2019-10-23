@@ -1,15 +1,17 @@
 DROP TABLE IF EXISTS critiques;
 DROP TABLE IF EXISTS users;
-CREATE TABLE critiques (
+CREATE TABLE critiques
+(
   id SERIAL PRIMARY KEY,
   username TEXT,
   title TEXT,
   description TEXT,
   questions TEXT,
   genre TEXT,
-  comments TEXT []
+  s3locationurl TEXT
 );
-CREATE TABLE users (
+CREATE TABLE users
+(
   id SERIAL PRIMARY KEY,
   firstName TEXT,
   lastName TEXT,
