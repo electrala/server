@@ -1,4 +1,5 @@
 // route/api/profile.js
+require('dotenv').config();
 const express = require('express');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
@@ -14,9 +15,9 @@ const router = express.Router();
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
-  accessKeyId: 'AKIAZF5FJDFOA7ZPUT2X',
-  secretAccessKey: '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',
-  Bucket: 'electrageneral'
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  Bucket: process.env.AWS_BUCKET
 });
 /**
  * Single Upload
@@ -24,7 +25,7 @@ const s3 = new aws.S3({
 const profileImgUpload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'electrageneral',
+    bucket: process.env.AWS_BUCKET,
     acl: 'public-read',
     key: function (req, file, cb) {
       cb(null, path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
