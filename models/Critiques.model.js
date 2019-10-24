@@ -26,11 +26,11 @@ exports.select = async (query = {}) => {
 
 exports.insert = async ({ username, title, description, genre, questions }) => {
   try {
-    console.log(username);
-    console.log(title);
-    console.log(description);
-    console.log(genre);
-    console.log(questions);
+    // console.log(username);
+    // console.log(title);
+    // console.log(description);
+    // console.log(genre);
+    // console.log(questions);
     if (!username || !title || !description || !genre || !questions)
       throw new ErrHTTP('Missing properties', 400);
     await db.query(

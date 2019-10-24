@@ -51,6 +51,7 @@ exports.logIn = async (request, response, next) => {
     if (!user) throw new ErrHTTP('This user does not exist.', 404);
     const isMatch = await bcrypt.compare(request.body.password, user.password);
     if (!isMatch) throw new ErrHTTP("This password doesn't match", 401);
+    // We can place the whole object where the user.username if we needed to
     const token = jwt.sign(user.username, process.env.JWT_SECRET);
     response.send({ message: 'Logged in!', token });
   } catch (err) {
