@@ -12,7 +12,7 @@ exports.select = async (query = {}) => {
 
     const queryString = format(
       `SELECT * FROM critiques ${
-      andClause.length ? `WHERE ${andClause}` : ''
+        andClause.length ? `WHERE ${andClause}` : ''
       } ORDER BY id`,
       ...Object.keys(query)
     );
@@ -24,7 +24,14 @@ exports.select = async (query = {}) => {
   }
 };
 
-exports.insert = async ({ username, title, description, genre, questions, s3locationurl }) => {
+exports.insert = async ({
+  username,
+  title,
+  description,
+  genre,
+  questions,
+  s3locationurl,
+}) => {
   try {
     console.log(username);
     console.log(title);
@@ -32,7 +39,14 @@ exports.insert = async ({ username, title, description, genre, questions, s3loca
     console.log(genre);
     console.log(questions);
     console.log(s3locationurl);
-    if (!username || !title || !description || !genre || !questions || !s3locationurl)
+    if (
+      !username ||
+      !title ||
+      !description ||
+      !genre ||
+      !questions ||
+      !s3locationurl
+    )
       throw new ErrHTTP('Missing properties', 400);
     const result = await db.query(
       `INSERT INTO critiques (username, title, description, genre, questions, s3locationurl)
