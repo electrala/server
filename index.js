@@ -1,5 +1,7 @@
+require('dotenv').config();
 // names of the different paths
 const express = require('express');
+
 // const logger = require('./middleware/logger');
 const cors = require('cors');
 const router = require('./middleware/meta.routes');

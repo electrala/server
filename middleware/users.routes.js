@@ -11,7 +11,7 @@ router.post('/login', users.logIn);
 
 // Selects a user  users/user/id
 router.get('/user/:userid', users.getUserById);
-// Updates a    users/users/id
+// Updates a  users/users/id
 router.patch('/users/:id', users.updateUser);
 // Deletes a user from the database based on their ID
 router.delete('/user/:id', users.deleteUser);
