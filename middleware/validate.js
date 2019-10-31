@@ -17,5 +17,3 @@ module.exports = (request, response, next) => {
     response.sendStatus(401);
   }
 };
-
-// hey this is here so deal with it
