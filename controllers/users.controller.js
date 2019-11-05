@@ -48,11 +48,12 @@ exports.logIn = async (request, response, next) => {
   try {
     const username = request.body.userName;
     const user = await Users.select(username);
+    const payload = { name: user.name, id: user.id };
     if (!user) throw new ErrHTTP('This user does not exist.', 404);
     const isMatch = await bcrypt.compare(request.body.password, user.password);
     if (!isMatch) throw new ErrHTTP("This password doesn't match", 401);
     // We can place the whole object where the user.username if we needed to
-    const token = jwt.sign(user.username, process.env.JWT_SECRET);
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
     response.send({ message: 'Logged in!', token });
   } catch (err) {
     next(err);
