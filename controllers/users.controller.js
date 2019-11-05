@@ -67,10 +67,10 @@ exports.logIn = async (request, response, next) => {
  * @param {object} next
  * @returns {object} A JSON object of the selected user
  */
-exports.getUserById = async (request, response, next) => {
+exports.getUserById = async ({ params: { id } }, response, next) => {
   try {
-    const { userid } = request.params;
-    const user = await Users.select({ userid });
+    console.log('my user id in controller', id);
+    const user = await Users.select({ id });
     if (user.length === 0) {
       throw new ErrHTTP('ID does not exist', 404);
     }
