@@ -48,11 +48,12 @@ exports.logIn = async (request, response, next) => {
   try {
     const username = request.body.userName;
     const user = await Users.select(username);
+    const payload = { name: user.name, id: user.id };
     if (!user) throw new ErrHTTP('This user does not exist.', 404);
     const isMatch = await bcrypt.compare(request.body.password, user.password);
     if (!isMatch) throw new ErrHTTP("This password doesn't match", 401);
     // We can place the whole object where the user.username if we needed to
-    const token = jwt.sign(user.username, process.env.JWT_SECRET);
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
     response.send({ message: 'Logged in!', token });
   } catch (err) {
     next(err);
@@ -66,10 +67,9 @@ exports.logIn = async (request, response, next) => {
  * @param {object} next
  * @returns {object} A JSON object of the selected user
  */
-exports.getUserById = async (request, response, next) => {
+exports.getUserById = async ({ params: { id } }, response, next) => {
   try {
-    const { userid } = request.params;
-    const user = await Users.select({ userid });
+    const user = await Users.select({ id });
     if (user.length === 0) {
       throw new ErrHTTP('ID does not exist', 404);
     }
