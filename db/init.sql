@@ -20,5 +20,6 @@ CREATE TABLE users
   password TEXT,
   confirmPassword TEXT,
   pronoun TEXT,
-  location TEXT
+  location TEXT,
+  userImageS3Location TEXT
 )

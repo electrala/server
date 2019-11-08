@@ -102,7 +102,7 @@ exports.insert = async ({
 exports.update = async (id, newData) => {
   try {
     if (!id) throw new ErrHTTP('Missing id', 400);
-    const { firstName, lastName, email, username, pronoun, location } = newData;
+    const { firstName, lastName, email, username, pronoun, location, userImageS3Location } = newData;
     await db.query(
       `UPDATE users
       SET
@@ -111,9 +111,10 @@ exports.update = async (id, newData) => {
         email = COALESCE($4, email),
         username = COALESCE($5, username),
         pronoun = COALESCE($6, pronoun),
-        location = COALESCE($7, location)
+        location = COALESCE($7, location),
+        userImageS3Location = COALESCE($8, userImageS3Location)
       WHERE id = ($1)`,
-      [id, firstName, lastName, email, username, pronoun, location]
+      [id, firstName, lastName, email, username, pronoun, location, userImageS3Location]
     );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
