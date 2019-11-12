@@ -29,8 +29,10 @@ exports.getUsers = async (request, response, next) => {
  * @returns {object} A JSON object of the new user
  */
 exports.createUser = async (request, response, next) => {
+  console.log(`users controller hit!`);
   try {
     const new_user = await Users.insert(request.body);
+    console.log(new_user);
     return response.status(201).json(new_user);
   } catch (err) {
     next(err);

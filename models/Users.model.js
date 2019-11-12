@@ -61,6 +61,7 @@ exports.insert = async ({
   pronoun,
   location,
 }) => {
+  console.log(`model hit!`)
   try {
     if (
       !firstName ||
@@ -73,6 +74,7 @@ exports.insert = async ({
     )
       throw new ErrHTTP('Invalid user properties', 400);
     const hashedPassword = await bcrypt.hash(password, 2);
+    const dummyImgUrl = "https://electrageneral.s3.us-west-2.amazonaws.com/dummyProfileImg-1573583667143.png";
     const result = await db.query(
       `INSERT INTO users (  
         firstName,
@@ -81,9 +83,10 @@ exports.insert = async ({
         userName,
         password,
         pronoun,
-        location)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [firstName, lastName, email, userName, hashedPassword, pronoun, location]
+        location,
+        userImageS3Location)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [firstName, lastName, email, userName, hashedPassword, pronoun, location, dummyImgUrl]
     );
     return result.rows[0];
   } catch (err) {
