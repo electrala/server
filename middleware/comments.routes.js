@@ -1,5 +1,5 @@
 const express = require('express');
-const critiques = require('../controllers/comments.controller');
+const comments = require('../controllers/comments.controller');
 const validate = require('./validate');
 
 const router = express.Router();
@@ -24,6 +24,5 @@ router.patch('/:id', validate, comments.updateComment);
 
 // Deletes a comment by id
 router.delete('/:id', validate, comments.deleteComment);
-
 
 module.exports = router;
