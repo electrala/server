@@ -58,3 +58,15 @@ exports.update = async ({ id }, newData) => {
     else throw new ErrHTTP('Database Error');
   }
 };
+
+exports.delete = async ({ id }) => {
+  try {
+    const result = await db.query(`DELETE FROM comments WHERE id = $1`, [id]);
+    if (result.rowCount === 0) {
+      throw new ErrHTTP(`Critique @ id: ${id} does not exist`)
+    }
+  } catch (err) {
+    if (err instanceof ErrHTTP) throw err;
+    else throw new ErrHTTP('database error');
+  }
+};
