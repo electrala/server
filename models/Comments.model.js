@@ -12,7 +12,7 @@ exports.select = async (query = {}) => {
 
     const queryString = format(
       `SELECT * FROM comments ${
-      andClause.length ? `WHERE ${andClause}` : ''
+        andClause.length ? `WHERE ${andClause}` : ''
       } ORDER BY id`,
       ...Object.keys(query)
     );
@@ -34,7 +34,6 @@ exports.insert = async ({ username, comment }) => {
       VALUES ($1, $2)`,
       [username, comment]
     );
-    console.log(result);
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('database error');
@@ -42,7 +41,6 @@ exports.insert = async ({ username, comment }) => {
 };
 
 exports.update = async ({ id }, newData) => {
-  console.log(newData);
   console.log(id);
   console.log(newData.comment);
   try {
