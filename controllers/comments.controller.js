@@ -4,7 +4,7 @@ const Comments = require('../models/Comments.model');
 
 const ErrHTTP = require('../utils/ErrHTTP');
 
-exports.getComments = async (request, response, next) => {
+exports.getAllComments = async (request, response, next) => {
   try {
     const all_comments = await Comments.select();
     return response.send(all_comments);
@@ -22,8 +22,8 @@ exports.createComment = async (request, response, next) => {
   }
 };
 
-// Get All critiques from a particular user
-exports.getCommentByUsername = async (
+// Get All comments from a particular user
+exports.getCommentsByUsername = async (
   { params: { username } },
   response,
   next
