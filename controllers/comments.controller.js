@@ -16,7 +16,7 @@ exports.getAllComments = async (request, response, next) => {
 exports.createComment = async (request, response, next) => {
   try {
     const new_comment = await Comments.insert(request.body);
-    response.send(new_comment);
+    response.status(201).send(new_comment);
   } catch (err) {
     next(err);
   }
@@ -41,9 +41,9 @@ exports.getCommentsByUsername = async (
 };
 
 // Get comments by ID
-exports.getCommentByID = async ({ params: { id } }, response, next) => {
+exports.getCommentByID = async ({ params: { crit_id } }, response, next) => {
   try {
-    const comments = await Comments.select({ id });
+    const comments = await Comments.select({ crit_id });
     if (!comments.length) {
       throw new ErrHTTP('User does not exist', 404);
     }
@@ -53,6 +53,15 @@ exports.getCommentByID = async ({ params: { id } }, response, next) => {
     next(err);
   }
 };
+
+exports.getCommentsByCritiqueID = async (request, response, next) => {
+  try {
+    const commentsByCrit = await Comments.selectByCritID(request.params);
+    response.send(commentsByCrit);
+  } catch (error) {
+    next(err);
+  }
+}
 
 exports.updateComment = async (request, response, next) => {
   try {

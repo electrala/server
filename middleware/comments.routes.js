@@ -11,13 +11,13 @@ router.get('/all', comments.getAllComments);
 router.post('/new', comments.createComment);
 
 // Select a single comment by its ID
-router.get('/:id', comments.getCommentByID);
+// router.get('/:id', comments.getCommentByID);
 
 // Select comments related to a single critique it belongs to
-// router.get('/:critiqueID', comments.getCommentsBelongingToCritique);
+router.get('/:critiqueID', comments.getCommentsByCritiqueID);
 
 // Select comments related to a single user
-router.get('/:username', comments.getCommentsByUsername);
+// router.get('/:username', comments.getCommentsByUsername);
 
 // Updates a comment
 router.patch('/:id', comments.updateComment);
