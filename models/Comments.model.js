@@ -12,7 +12,7 @@ exports.select = async (query = {}) => {
 
     const queryString = format(
       `SELECT * FROM comments ${
-        andClause.length ? `WHERE ${andClause}` : ''
+      andClause.length ? `WHERE ${andClause}` : ''
       } ORDER BY id`,
       ...Object.keys(query)
     );
@@ -24,17 +24,33 @@ exports.select = async (query = {}) => {
   }
 };
 
-exports.insert = async ({ username, comment }) => {
+exports.selectByCritID = async ({ critiqueID }) => {
+  console.log(critiqueID);
+  try {
+    const result = await db.query(
+      `SELECT * FROM comments WHERE crit_id=${critiqueID} ORDER BY id`
+    );
+    return result.rows;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+exports.insert = async ({ username, comment, critiqueID }) => {
   try {
     console.log(username);
     console.log(comment);
-    if (!username || !comment) throw new ErrHTTP('Missing properties', 400);
+    console.log(critiqueID);
+    // create timestamp now and pass it in to the table.
+    if (!username || !comment || !critiqueID) throw new ErrHTTP('Missing properties', 400);
     const result = await db.query(
-      `INSERT INTO comments (username, comment)
-      VALUES ($1, $2)`,
-      [username, comment]
+      `INSERT INTO comments (username, comment, crit_id)
+      VALUES ($1, $2, $3) RETURNING *`,
+      [username, comment, critiqueID]
     );
+    console.log(result.rows[0]);
   } catch (err) {
+    console.log(err.message);
     if (err instanceof ErrHTTP) throw err;
     else throw new ErrHTTP('database error');
   }
