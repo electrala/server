@@ -29,6 +29,7 @@ exports.insert = async ({ username, comment, critiqueID }) => {
     console.log(username);
     console.log(comment);
     console.log(critiqueID);
+    // create timestamp now and pass it in to the table.
     if (!username || !comment || !critiqueID) throw new ErrHTTP('Missing properties', 400);
     const result = await db.query(
       `INSERT INTO comments (username, comment, crit_id)
