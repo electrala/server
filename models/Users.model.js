@@ -77,7 +77,7 @@ exports.insert = async ({
     const hashedPassword = await bcrypt.hash(password, 2);
     const dummyImgUrl = "https://electrageneral.s3.us-west-2.amazonaws.com/dummyProfileImg-1573583667143.png";
     const result = await db.query(
-      `INSERT INTO users (  
+      `INSERT INTO users (
         firstName,
         lastName,
         email,
