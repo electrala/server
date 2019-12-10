@@ -68,9 +68,10 @@ exports.insert = async ({
       !lastName ||
       !email ||
       !userName ||
-      !password ||
-      !pronoun ||
-      !location
+      !password
+      // ||
+      // !pronoun ||
+      // !location
     )
       throw new ErrHTTP('Invalid user properties', 400);
     const hashedPassword = await bcrypt.hash(password, 2);
