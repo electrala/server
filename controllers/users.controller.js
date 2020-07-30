@@ -29,8 +29,10 @@ exports.getUsers = async (request, response, next) => {
  * @returns {object} A JSON object of the new user
  */
 exports.createUser = async (request, response, next) => {
+  console.log(`users controller hit!`);
   try {
     const new_user = await Users.insert(request.body);
+    console.log(new_user);
     return response.status(201).json(new_user);
   } catch (err) {
     next(err);
@@ -53,7 +55,7 @@ exports.logIn = async (request, response, next) => {
     const isMatch = await bcrypt.compare(request.body.password, user.password);
     if (!isMatch) throw new ErrHTTP("This password doesn't match", 401);
     // We can place the whole object where the user.username if we needed to
-    const token = jwt.sign(payload, process.env.JWT_SECRET);
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "12h" });
     response.send({ message: 'Logged in!', token });
   } catch (err) {
     next(err);

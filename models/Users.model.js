@@ -61,6 +61,7 @@ exports.insert = async ({
   pronoun,
   location,
 }) => {
+  console.log(`model hit!`)
   try {
     if (
       !firstName ||
@@ -73,6 +74,7 @@ exports.insert = async ({
     )
       throw new ErrHTTP('Invalid user properties', 400);
     const hashedPassword = await bcrypt.hash(password, 2);
+    const dummyImgUrl = "https://electrageneral.s3.us-west-2.amazonaws.com/dummyProfileImg-1573583667143.png";
     const result = await db.query(
       `INSERT INTO users (  
         firstName,
@@ -81,9 +83,10 @@ exports.insert = async ({
         userName,
         password,
         pronoun,
-        location)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [firstName, lastName, email, userName, hashedPassword, pronoun, location]
+        location,
+        userImageS3Location)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [firstName, lastName, email, userName, hashedPassword, pronoun, location, dummyImgUrl]
     );
     return result.rows[0];
   } catch (err) {
@@ -102,7 +105,7 @@ exports.insert = async ({
 exports.update = async (id, newData) => {
   try {
     if (!id) throw new ErrHTTP('Missing id', 400);
-    const { firstName, lastName, email, username, pronoun, location } = newData;
+    const { firstName, lastName, email, username, pronoun, location, userImageS3Location } = newData;
     await db.query(
       `UPDATE users
       SET
@@ -111,9 +114,10 @@ exports.update = async (id, newData) => {
         email = COALESCE($4, email),
         username = COALESCE($5, username),
         pronoun = COALESCE($6, pronoun),
-        location = COALESCE($7, location)
+        location = COALESCE($7, location),
+        userImageS3Location = COALESCE($8, userImageS3Location)
       WHERE id = ($1)`,
-      [id, firstName, lastName, email, username, pronoun, location]
+      [id, firstName, lastName, email, username, pronoun, location, userImageS3Location]
     );
   } catch (err) {
     if (err instanceof ErrHTTP) throw err;
